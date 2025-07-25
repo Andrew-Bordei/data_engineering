@@ -1,5 +1,5 @@
 import requests
-from Data_Science.honey.scraper.headers import HEADERS
+from headers import HEADERS
 import random
 
 class Session:

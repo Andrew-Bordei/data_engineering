@@ -16,13 +16,13 @@ class Extract:
         base_path = json_data['cat1']['searchResults']['listResults']
         num_houses = len(base_path)
 
-        for house in range(0, len(num_houses)):
+        for house in range(0, num_houses):
             home_info_path = base_path[house]['hdpData']['homeInfo']
 
             house_id = self.safely_traverse_dict(base_path[house], 'id')
             address = self.safely_traverse_dict(base_path[house], 'address')
             price = self.safely_traverse_dict(home_info_path, 'price')
-            tax_value = self.safely_traverse_dict(home_info_path, 'taxAssessedValue')
+            tax_assessed_price = self.safely_traverse_dict(home_info_path, 'taxAssessedValue')
             bedrooms = self.safely_traverse_dict(home_info_path, 'bedrooms')
             bathrooms = self.safely_traverse_dict(home_info_path, 'bathrooms')
             living_sqft = self.safely_traverse_dict(home_info_path, 'livingArea')
@@ -46,7 +46,7 @@ class Extract:
                 "house_id": house_id, 
                 "address": address, 
                 "price": price,
-                "tax_value": tax_value,
+                "tax_assessed_price": tax_assessed_price,
                 "bedrooms": bedrooms, 
                 "bathrooms": bathrooms, 
                 "living_sqft": living_sqft, 

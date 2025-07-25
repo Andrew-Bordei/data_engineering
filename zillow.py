@@ -1,7 +1,7 @@
 import json
-import sys 
-
-sys.path.append('./')
+import time 
+import random
+from datetime import datetime
 from session import Session
 from extract import Extract
 
@@ -23,11 +23,15 @@ headers = {
   'Priority': 'u=4'
 }
 
-def get_all_data() -> list[dict[str:any]]:
+def get_all_data(west_bound, east_bound, south_bound, north_bound,
+                search_term, region_id
+    ) -> list[dict[str:any]]:
     all_data = []
     sess = Session(headers=headers)
 
     for page in range(1, 21):
+        time.sleep(random.uniform(0.5, 3))
+        print(f"Getting the housing data on page: {page}")
 
         payload = json.dumps({
             "searchQueryState": {
@@ -36,15 +40,15 @@ def get_all_data() -> list[dict[str:any]]:
                 },
                 "isMapVisible": False,
                 "mapBounds": {
-                "west": -116.369806,
-                "east": -116.043493,
-                "south": 43.488708,
-                "north": 43.832628
+                "west": west_bound,
+                "east": east_bound,
+                "south": south_bound,
+                "north": north_bound
                 },
-                "usersSearchTerm": "Boise ID homes",
+                "usersSearchTerm": search_term,
                 "regionSelection": [
                 {
-                    "regionId": 3737
+                    "regionId": region_id
                 }
                 ],
                 "filterState": {
@@ -70,16 +74,60 @@ def get_all_data() -> list[dict[str:any]]:
         all_data.append(data)
     return all_data        
 
-def extract_data(data: list[dict[str:any]]):
+def main(data: list[dict[str:any]]):
     ext = Extract()
     all_data = []
     num_pages = len(data)
 
     for i in range(0, num_pages):
-        
-
+        json_data = json.loads(data[i])
+        house_data = ext.zillow_extract_data(json_data)
+        all_data.append(house_data)
+    return all_data
 
 if __name__ == '__main__': 
-    zillow_data = get_all_data()
-    with open('zillow_data_boise_2025_07_20.json', 'w', encoding='utf-8') as f:
-        json.dump(zillow_data, f)
+    zillow_data = get_all_data(
+        west_bound = -85.751532, 
+        east_bound = -85.429433, 
+        south_bound = 42.852098, 
+        north_bound = 43.029051,
+        search_term = "Grand Rapids MI homes", 
+        region_id = 11671
+    )
+    data = main(zillow_data)
+
+    date = datetime.today().strftime('%Y-%m-%d')
+
+    with open(f'zillow_data_grand_rapids_{date}.json', 'w', encoding='utf-8') as f:
+        json.dump(data, f)
+
+
+    # Boise bounds 
+    #  "west": -116.369806,
+    #             "east": -116.043493,
+    #             "south": 43.488708,
+    #             "north": 43.832628
+    # boise search term
+    # Boise ID homes
+    # Boise region id 
+    # 3737
+
+    # Grand rapids bounds 
+    #  "west": -85.751532,
+    #             "east": -85.429433,
+    #             "south": 42.852098,
+    #             "north": 43.029051
+    # grand rapids search term
+    # Grand Rapids MI homes
+    # grand rapids region id 
+    # 11671
+    
+    # harrisburg bounds 
+    #  "west": -76.932147,
+    #             "east": -76.682837,
+    #             "south": 40.20838,
+    #             "north": 40.434354
+    # harrisburg search term
+    # Harrisburg PA homes
+    # harrisburg region id 
+    # 11817
