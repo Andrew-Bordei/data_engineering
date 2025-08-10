@@ -4,3 +4,6 @@ zip_data_boise_2025_07_20.json
 zillow_data_boise_2025_07_20.json
 *.json
 zillow_data_boise_2025_07_20.json
+.de_env/Include/site/python3.12/greenlet/greenlet.h
+.de_env/Lib/site-packages/__pycache__/methodtools.cpython-312.pyc
+/.de_env

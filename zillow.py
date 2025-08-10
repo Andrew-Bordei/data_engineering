@@ -1,6 +1,7 @@
 import json
 import time 
 import random
+import asyncio 
 from datetime import datetime
 from session import Session
 from extract import Extract
@@ -114,6 +115,7 @@ if __name__ == '__main__':
 
     date = datetime.today().strftime('%Y-%m-%d')
 
+    # data = asyncio.run(zillow_scraper.main())
     data = zillow_scraper.main()
 
     for city_name, city_data in data.items(): 
