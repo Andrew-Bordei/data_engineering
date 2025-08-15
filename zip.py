@@ -2,6 +2,7 @@ from rnet import Impersonate, Client
 import asyncio 
 import json 
 from datetime import datetime
+from load import Load
 
 class Zip:
     def __init__(self, url: str, city: str):
@@ -49,5 +50,3 @@ if __name__ == "__main__":
         return data 
 
     all_data = asyncio.run(get_all_data())
-
-
