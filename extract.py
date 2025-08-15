@@ -1,8 +1,9 @@
-
+# Rename to ZillowExtract
 class Extract:
     def __init__(self):
         pass
     
+    # Add to new class 
     def safely_traverse_dict(self, dict: dict[str: any], *keys) -> any:
         for key in keys:
             try:
