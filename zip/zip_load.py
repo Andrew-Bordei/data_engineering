@@ -25,7 +25,7 @@ class ZipLoad:
         """
         Insert cleaned data into a MySQL database 
         """ 
-        my_cursor = self.database.cursor()
+        cursor = self.database.cursor()
 
         # Convert dataframe to a tuple to comply with executemany requirements 
         data = [tuple(x) for x in df.to_numpy()]
@@ -36,10 +36,15 @@ class ZipLoad:
             VALUES (%s, %s, %s, %s);
         """
 
-        my_cursor.executemany(sql_statement, data)
+        cursor.executemany(sql_statement, data)
 
         self.database.commit()
         # my_cursor.close()
         # self.database.close()
 
         return print(f'Clean data was successfully inserted into {table_name}!')
+    
+    def close_database_connection(self):
+        pass
+        # my_cursor.close()
+        # self.database.close()
