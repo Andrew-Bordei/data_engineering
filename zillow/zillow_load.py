@@ -1,7 +1,7 @@
 import mysql.connector
 import pandas as pd 
 
-class Load:
+class ZillowLoad:
     def __init__(self):
         self.database = mysql.connector.connect(
             host="localhost",
@@ -11,13 +11,15 @@ class Load:
         )
     
     def load_zillow_data(self, df: pd.DataFrame, table_name: str) -> int:   
-        """
-        Insert cleaned data into a MySQL table 
-        """ 
+        """Insert cleaned data into a MySQL table""" 
         my_cursor = self.database.cursor()
 
         # Convert dataframe to a tuple to comply with executemany requirements 
-        data = [tuple(x) for x in df.to_numpy()]
+        # data = [tuple(x) for x in df.to_numpy()]
+
+        # Convert df to tuple & change nan -> None to comply with mysql reqs 
+        data = [tuple(None if pd.isna(x) else x for x in row)
+            for row in df.itertuples(index=False, name=None)]
 
         sql_statement = f"""
             INSERT INTO {table_name} 

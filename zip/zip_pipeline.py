@@ -15,7 +15,7 @@ async def zip_pipeline(url: str, city: str, table_name: str,):
     load = zip_load.load_database(transformed_df, table_name)
     return load 
 
-async def get_all_data():
+async def zip_async_pipeline():
     data = await asyncio.gather(
         zip_pipeline(boise_zip_url, 'boise', 'zip_salaries'),
         zip_pipeline(gr_zip_url, 'grand rapids', 'zip_salaries'),
@@ -24,4 +24,4 @@ async def get_all_data():
     return data
 
 if __name__ == "__main__":
-    all_data = asyncio.run(get_all_data())
+    all_data = asyncio.run(zip_async_pipeline())
