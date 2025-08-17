@@ -40,9 +40,9 @@ class ZillowSession:
             })
         return payload
     
-    def zillow_get_page(self, url: str, headers: dict[str, str], payload: dict) -> dict:
+    async def zillow_get_page(self, url: str, headers: dict[str, str], payload: dict) -> dict:
         """Return the house listings for a specific page""" 
-        response = self.session.put(url, headers=headers, data=payload)
+        response = await self.session.put(url, headers=headers, data=payload)
 
         return self.return_data_safely(response)
     
