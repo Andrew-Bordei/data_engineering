@@ -4,8 +4,7 @@ from zip_load import ZipLoad
 from zip_transform import ZipTransform
 from zip_urls import *
 
-
-async def zip_pipeline(url: str, city: str, table_name: str,):
+async def zip_pipeline(url: str, city: str, table_name: str):
     zip_ext = ZipExtract()
     zip_transform = ZipTransform()
     zip_load = ZipLoad()

@@ -2,11 +2,11 @@ import requests
 import json
 import random
 from headers import HEADERS
+from zillow_constants import LOW_RANDOM, HIGH_RANDOM, REQUEST_ID
 
 class ZillowSession:
     def __init__(self, headers) -> None:
-        # self.payload = payload
-        self.user_agent = random.randint(0,10)
+        self.user_agent = random.randint(LOW_RANDOM,HIGH_RANDOM)
         self.headers = headers
         self.headers['User-Agent'] = HEADERS[self.user_agent].get('User-Agent')
         self.session = requests.Session()
@@ -35,14 +35,14 @@ class ZillowSession:
                     "isListVisible": True
                 },
                 "wants": {"cat1": ["listResults"],"cat2": ["total"]},
-                "requestId": 2,
+                "requestId": REQUEST_ID,
                 "isDebugRequest": False
             })
         return payload
     
-    async def zillow_get_page(self, url: str, headers: dict[str, str], payload: dict) -> dict:
+    def zillow_get_page(self, url: str, headers: dict[str, str], payload: dict) -> dict:
         """Return the house listings for a specific page""" 
-        response = await self.session.put(url, headers=headers, data=payload)
+        response = self.session.put(url, headers=headers, data=payload)
 
         return self.return_data_safely(response)
     

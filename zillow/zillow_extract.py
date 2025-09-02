@@ -12,7 +12,7 @@ class ZillowExtract:
         self.min_sleep = MIN_SLEEP
         self.max_sleep = MAX_SLEEP 
 
-    async def get_all_pages(
+    def get_all_pages(
             self, west_bound: int, east_bound: int, south_bound: int, 
             north_bound: int, search_term: str, region_id: int 
         ) -> list[dict[str,any]]:
@@ -26,7 +26,7 @@ class ZillowExtract:
             print(f"Getting the housing data on page: {page}")
 
             payload = sess.set_payload(page,west_bound,east_bound,south_bound,north_bound,search_term,region_id)
-            data = await sess.zillow_get_page(url=self.url, headers=self.headers, payload=payload)
+            data = sess.zillow_get_page(url=self.url, headers=self.headers, payload=payload)
             all_data.append(data)
         return all_data   
          
@@ -109,11 +109,11 @@ class ZillowExtract:
             all_houses_data.append(house_data)
         return all_houses_data
     
-    async def extract(self,  west_bound: int, east_bound: int, south_bound: int, 
+    def extract(self,  west_bound: int, east_bound: int, south_bound: int, 
         north_bound: int, search_term: str, region_id: int) -> list[any]:
         """Execute the entire extraction process"""
 
-        all_pages = await self.get_all_pages(
+        all_pages = self.get_all_pages(
             west_bound, east_bound, south_bound, 
             north_bound, search_term, region_id
         )

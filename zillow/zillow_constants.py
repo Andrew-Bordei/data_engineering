@@ -30,3 +30,6 @@ zillow_url = "https://www.zillow.com/async-create-search-page-state"
 MAX_PAGES = 21
 MIN_SLEEP = 0.5
 MAX_SLEEP = 3
+LOW_RANDOM = 0
+HIGH_RANDOM = 10
+REQUEST_ID = 2
