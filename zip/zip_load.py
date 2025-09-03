@@ -17,14 +17,10 @@ class ZipLoad:
 
         with open(f'zip_data_{city}_{date}.json', 'w', encoding='utf-8') as f:
             json.dump(data, f)
-
         return print('Data was successfully saved!')
-    
 
-    def load_database(self, df: pd.DataFrame, table_name: str) -> int:   
-        """
-        Insert cleaned data into a MySQL database 
-        """ 
+    def load_clean_data(self, df: pd.DataFrame, table_name: str) -> int:   
+        """Insert cleaned data into a MySQL table """ 
         cursor = self.database.cursor()
 
         # Convert dataframe to a tuple to comply with executemany requirements 
@@ -37,12 +33,26 @@ class ZipLoad:
         """
 
         cursor.executemany(sql_statement, data)
-
         self.database.commit()
-        # my_cursor.close()
-        # self.database.close()
 
         return print(f'Clean data was successfully inserted into {table_name}!')
+    
+    def load_analytics(self, df: pd.DataFrame, table_name: str) -> str: 
+        cursor = self.database.cursor()
+
+        # To comply with reqs convert df to a tuple  
+        data = [tuple(x) for x in df.to_numpy()]
+
+        sql_statement = f"""
+            INSERT INTO {table_name}
+            (median_salary, city, date_extracted)
+            VALUES (%s, %s, %s);
+        """
+
+        cursor.executemany(sql_statement, data)
+        self.database.commit()
+
+        return print(f'Analytics data was successfully inserted into {table_name}!')
     
     def close_database_connection(self):
         pass
