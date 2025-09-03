@@ -29,18 +29,6 @@ class ZillowExtract:
             data = sess.zillow_get_page(url=self.url, headers=self.headers, payload=payload)
             all_data.append(data)
         return all_data   
-         
-    def extract_page_data(self, data: list[dict[str,any]]) -> list[any]:
-        """Extract data from each page and store it in a list"""
-        
-        all_data = []
-        num_pages = len(data)
-
-        for i in range(0, num_pages):
-            json_data = json.loads(data[i])
-            house_data = self.extract_house_data(json_data)
-            all_data.append(house_data)
-        return all_data
     
     def safely_traverse_dict(self, dict: dict[str: any], *keys) -> any:
         for key in keys:
@@ -109,9 +97,23 @@ class ZillowExtract:
             all_houses_data.append(house_data)
         return all_houses_data
     
+    def extract_page_data(self, data: list[dict[str,any]]) -> list[any]:
+        """Extract data from each page and store it in a list"""
+        
+        all_data = []
+        num_pages = len(data)
+
+        for i in range(0, num_pages):
+            json_data = json.loads(data[i])
+            house_data = self.extract_house_data(json_data)
+            all_data.extend(house_data)
+        return all_data
+    
     def extract(self,  west_bound: int, east_bound: int, south_bound: int, 
         north_bound: int, search_term: str, region_id: int) -> list[any]:
         """Execute the entire extraction process"""
+
+        all_house_data = []
 
         all_pages = self.get_all_pages(
             west_bound, east_bound, south_bound, 
@@ -119,4 +121,5 @@ class ZillowExtract:
         )
         
         house_data = self.extract_page_data(all_pages)
-        return house_data
+        all_house_data.extend(house_data)
+        return all_house_data
