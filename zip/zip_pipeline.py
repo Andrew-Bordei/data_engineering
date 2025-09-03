@@ -5,16 +5,25 @@ from zip_transform import ZipTransform
 from zip_urls import *
 
 async def zip_pipeline(url: str, city: str, table_name: str):
+    """Execute each entity of the pipeline"""
     zip_ext = ZipExtract()
     zip_transform = ZipTransform()
     zip_load = ZipLoad()
 
+    # Extract 
     data = await zip_ext.extract_data(url)
-    transformed_df = zip_transform.transform_zip_data(data, city)
-    load = zip_load.load_database(transformed_df, table_name)
-    return load 
+    
+    # Transform 
+    transformed_df = zip_transform.transform_data(data, city)
+    analytics_df = zip_transform.analytics(transformed_df, city)
+    
+    # Load 
+    load_data = zip_load.load_clean_data(transformed_df, table_name)
+    load_analytics = zip_load.load_analytics(analytics_df, "zip_analytics")
+    return load_data, load_analytics
 
 async def zip_async_pipeline():
+    """Run all of the functions async to increase performance"""
     data = await asyncio.gather(
         zip_pipeline(boise_zip_url, 'boise', 'zip_salaries'),
         zip_pipeline(gr_zip_url, 'grand rapids', 'zip_salaries'),
