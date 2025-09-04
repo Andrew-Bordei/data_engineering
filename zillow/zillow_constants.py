@@ -27,7 +27,7 @@ harrisburg_bounds = {
 
 zillow_url = "https://www.zillow.com/async-create-search-page-state"
 
-MAX_PAGES = 21
+MAX_PAGES = 2
 MIN_SLEEP = 0.5
 MAX_SLEEP = 3
 LOW_RANDOM = 0

@@ -25,3 +25,4 @@ class ZipTransform:
         df['date_extracted'] = self.date
 
         return df
+    
