@@ -28,11 +28,15 @@ class ZillowTransform:
     
     def compute_analytics(self, data: pd.DataFrame, city: str) -> pd.DataFrame: 
         "Compute the median home price for a city"
-        df = pd.DataFrame()
+        df = pd.DataFrame(data['price'])
+        print("data head: ", data.head())
 
         df['median_price'] = np.median(data['price'])
         df['city'] = city 
         df['date_extracted'] = self.date
+        df = df.drop(columns='price')
+
+        print("df head: ", df.head())
 
         return df 
     

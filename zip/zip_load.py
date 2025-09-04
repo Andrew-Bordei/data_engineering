@@ -38,6 +38,7 @@ class ZipLoad:
         return print(f'Clean data was successfully inserted into {table_name}!')
     
     def load_analytics(self, df: pd.DataFrame, table_name: str) -> str: 
+        """Insert analytics into table"""
         cursor = self.database.cursor()
 
         # To comply with reqs convert df to a tuple  
