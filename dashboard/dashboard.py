@@ -14,9 +14,7 @@ def extract_data(city: str) -> pd.DataFrame:
         password=CONFIG['password'],
         database=CONFIG['database']
     )
-
     my_cursor = database.cursor()
-
 
     sql_statement = f"""
         SELECT date_extracted, ROUND(AVG(price), 0)
@@ -34,6 +32,7 @@ def extract_data(city: str) -> pd.DataFrame:
     return df
 
 def display_chart(df: pd.DataFrame, city: str) -> px.line:
+    """Plot a line chart with data"""
     fig = px.line(df, x='date_extracted', y='avg_price', title=f"Average Home Price in {city}")
     fig.update_traces(mode="lines+markers")
     return fig

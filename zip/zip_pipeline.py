@@ -15,13 +15,13 @@ async def zip_pipeline(url: str, city: str, table_name: str):
     
     # Transform 
     transformed_df = zip_transform.transform_data(data, city)
-    analytics_df = zip_transform.analytics(transformed_df, city)
+    # analytics_df = zip_transform.analytics(transformed_df, city)
     
     # Load 
     load_data = zip_load.load_clean_data(transformed_df, table_name)
-    load_analytics = zip_load.load_analytics(analytics_df, "zip_analytics")
-    return load_data, load_analytics
-
+    # load_analytics = zip_load.load_analytics(analytics_df, "zip_analytics")
+    # return load_data, load_analytics
+    return "test"
 async def zip_async_pipeline():
     """Run all of the functions async to increase performance"""
     data = await asyncio.gather(
