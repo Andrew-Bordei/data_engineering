@@ -16,24 +16,42 @@ def extract_data(city: str) -> pd.DataFrame:
     )
     my_cursor = database.cursor()
 
-    sql_statement = f"""
-        SELECT date_extracted, ROUND(AVG(price), 0)
-        FROM zillow_data
-        WHERE address LIKE %s
-        GROUP BY date_extracted
-        ORDER BY date_extracted; 
+    zillow_statement = f"""
+        SELECT date_extracted, median_price
+        FROM zillow_analytics
+        WHERE city LIKE %s; 
     """
+
+    zip_statement = f"""
+        SELECT date_extracted, median_salary
+        FROM zip_analytics
+        WHERE city LIKE %s;
+    """
+
     params = (f"%{city}%",)
 
-    my_cursor.execute(sql_statement, params)
-    data = my_cursor.fetchall()
-    df = pd.DataFrame(data, columns=['date_extracted', 'avg_price'])
+    my_cursor.execute(zillow_statement, params)
+    zillow_data = my_cursor.fetchall()
+    zillow_df = pd.DataFrame(zillow_data, columns=['date_extracted', 'median_price'])
 
-    return df
+    my_cursor.execute(zip_statement, params)
+    zip_data = my_cursor.fetchall()
+    zip_df = pd.DataFrame(zip_data, columns=['date_extracted', 'median_salary'])
+
+    return [zillow_df, zip_df]
+
+def price_income(zillow_df: pd.DataFrame, zip_df: pd.DataFrame):
+    """Calculate the price to income for given city"""
+    ratio = zillow_df['median_price'] / zip_df['median_salary']
+
+    ratio_df = pd.DataFrame(ratio, columns=['price_income_ratio'])
+    ratio_df['date_extracted'] = zillow_df['date_extracted']
+
+    return ratio_df
 
 def display_chart(df: pd.DataFrame, city: str) -> px.line:
     """Plot a line chart with data"""
-    fig = px.line(df, x='date_extracted', y='avg_price', title=f"Average Home Price in {city}")
+    fig = px.line(df, x='date_extracted', y='price_income_ratio', title=f"Price to Income Ratio in {city}")
     fig.update_traces(mode="lines+markers")
     return fig
 
@@ -61,8 +79,9 @@ app.layout = [
 )
 
 def update_graph(city):
-    df = extract_data(city)
-    fig = display_chart(df, city)
+    dataframes = extract_data(city)
+    analytics = price_income(dataframes[0], dataframes[1])
+    fig = display_chart(analytics, city)
     
     return fig
 
