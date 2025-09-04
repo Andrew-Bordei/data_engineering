@@ -1,9 +1,13 @@
 import pandas as pd
 import mysql.connector
 import plotly.express as px 
+from dash import Dash, html, dcc, callback, Output, Input
+import plotly.express as px
+
 from config import CONFIG
 
-def extract_data(city:str) -> pd.DataFrame: 
+def extract_data(city: str) -> pd.DataFrame: 
+    """Query the SQL db to get city data"""
     database = mysql.connector.connect(
         host=CONFIG['host'],
         user=CONFIG['user'],
@@ -29,12 +33,39 @@ def extract_data(city:str) -> pd.DataFrame:
 
     return df
 
-def display_chart(df: pd.DataFrame, city: str, state: str) -> None:
-    fig = px.line(df, x='date_extracted', y='avg_price', title=f"Average Home Price in {city}, {state}")
-    fig.show()
+def display_chart(df: pd.DataFrame, city: str) -> px.line:
+    fig = px.line(df, x='date_extracted', y='avg_price', title=f"Average Home Price in {city}")
+    fig.update_traces(mode="lines+markers")
+    return fig
 
-if __name__ == '__main__': 
-    city = 'Grand Rapids'
-    state = "MI"
-    data = extract_data(city)
-    display_chart(data, city, state)
+app = Dash()
+
+cities = ["Boise", "Harrisburg", "Grand Rapids"]
+
+app.layout = [
+    html.H1(children='Housing Affordability', style={'textAlign':'center'}),
+    dcc.Dropdown(
+        cities, 
+        id='dropdown-selection', 
+        value='City',
+        ),
+    dcc.Graph(
+        id='graph-content',
+        config={"responsive": True}, 
+        style={"width": "100%", "height": "60vh"}
+    )
+]
+
+@callback(
+    Output('graph-content', 'figure'),
+    Input('dropdown-selection', 'value')
+)
+
+def update_graph(city):
+    df = extract_data(city)
+    fig = display_chart(df, city)
+    
+    return fig
+
+if __name__ == '__main__':
+    app.run(debug=True)
