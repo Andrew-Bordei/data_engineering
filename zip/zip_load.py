@@ -25,6 +25,7 @@ class ZipLoad:
 
         # Convert dataframe to a tuple to comply with executemany requirements 
         data = [tuple(x) for x in df.to_numpy()]
+        print("Tuple data: ",data)
 
         sql_statement = f"""
             INSERT INTO {table_name}
@@ -37,12 +38,11 @@ class ZipLoad:
 
         return print(f'Clean data was successfully inserted into {table_name}!')
     
-    def load_analytics(self, df: pd.DataFrame, table_name: str) -> str: 
+    def load_analytics(self, data: list[any], table_name: str) -> str: 
         """Insert analytics into table"""
         cursor = self.database.cursor()
 
-        # To comply with reqs convert df to a tuple  
-        data = [tuple(x) for x in df.to_numpy()]
+        tuple_data = tuple(data)
 
         sql_statement = f"""
             INSERT INTO {table_name}
@@ -50,7 +50,7 @@ class ZipLoad:
             VALUES (%s, %s, %s);
         """
 
-        cursor.executemany(sql_statement, data)
+        cursor.execute(sql_statement, tuple_data)
         self.database.commit()
 
         return print(f'Analytics data was successfully inserted into {table_name}!')

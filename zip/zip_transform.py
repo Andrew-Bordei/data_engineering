@@ -15,14 +15,13 @@ class ZipTransform:
 
         return df 
     
-    def analytics(self, data: pd.DataFrame, city: str) -> pd.DataFrame: 
+    def analytics(self, df: pd.DataFrame, city: str) -> list[any]: 
         """Expand all of the salary * their occurrence, then calc median"""
-        df = pd.DataFrame()
+        data = []
 
-        expanded_df = data.loc[data.index.repeat(data['count'])].reset_index(drop=True)
-        df['median_salary'] = np.median(expanded_df['salary'])
-        df['city'] = city
-        df['date_extracted'] = self.date
+        expanded_df = df.loc[df.index.repeat(df['count'])].reset_index(drop=True)
+        median_salary = np.median(expanded_df['salary'])
 
-        return df
+        data.append(median_salary, city, self.date)
+        return data
     

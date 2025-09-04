@@ -14,9 +14,6 @@ class ZillowLoad:
         """Insert cleaned data into a MySQL table""" 
         my_cursor = self.database.cursor()
 
-        # Convert dataframe to a tuple to comply with executemany requirements 
-        # data = [tuple(x) for x in df.to_numpy()]
-
         # Convert df to tuple & change nan -> None to comply with mysql reqs 
         data = [tuple(None if pd.isna(x) else x for x in row)
             for row in df.itertuples(index=False, name=None)]
@@ -31,29 +28,27 @@ class ZillowLoad:
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
             %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
         """
+        
         my_cursor.executemany(sql_statement, data)
-
         self.database.commit()
         # my_cursor.close()
         # self.database.close()
 
         return print(f'Clean data was successfully inserted into {table_name}!')
     
-    def load_analytics(self, df: pd.DataFrame, table_name: str) -> int:   
-        """Insert analytics into a MySQL table""" 
+    def load_analytics(self, data: list[any], table_name: str) -> int:   
+        """Insert zillow analytics into a MySQL table""" 
         my_cursor = self.database.cursor()
 
-        # Convert df to tuple & change nan -> None to comply with mysql reqs 
-        data = [tuple(None if pd.isna(x) else x for x in row)
-            for row in df.itertuples(index=False, name=None)]
+        tuple_data = tuple(data)
 
         sql_statement = f"""
             INSERT INTO {table_name} 
             (median_price, city, date_extracted)
             VALUES (%s, %s, %s);
         """
-        my_cursor.executemany(sql_statement, data)
 
+        my_cursor.execute(sql_statement, tuple_data)
         self.database.commit()
 
         return print(f'Analytics were successfully inserted into {table_name}!')
