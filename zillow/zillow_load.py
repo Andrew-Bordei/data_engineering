@@ -34,7 +34,7 @@ class ZillowLoad:
         # my_cursor.close()
         # self.database.close()
 
-        return print(f'Clean data was successfully inserted into {table_name}!')
+        return print(f'Clean data successfully inserted into {table_name}!')
     
     def load_analytics(self, data: list[any], table_name: str) -> int:   
         """Insert zillow analytics into a MySQL table""" 

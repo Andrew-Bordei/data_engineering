@@ -22,6 +22,8 @@ class ZipTransform:
         expanded_df = df.loc[df.index.repeat(df['count'])].reset_index(drop=True)
         median_salary = np.median(expanded_df['salary'])
 
-        data.append(median_salary, city, self.date)
+        data.append(median_salary)
+        data.append(city)
+        data.append(self.date)
         return data
     

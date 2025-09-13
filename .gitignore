@@ -21,3 +21,6 @@ __pycache__/extract.cpython-312.pyc
 dashboard/config.py
 dashboard/test.ipynb
 /dashboard/__pycache__
+/redfin/__pycache__
+redfin/test.ipynb
+redfin/redfin_data_2025-09-13.csv

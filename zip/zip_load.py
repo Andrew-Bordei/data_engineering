@@ -25,7 +25,6 @@ class ZipLoad:
 
         # Convert dataframe to a tuple to comply with executemany requirements 
         data = [tuple(x) for x in df.to_numpy()]
-        print("Tuple data: ",data)
 
         sql_statement = f"""
             INSERT INTO {table_name}

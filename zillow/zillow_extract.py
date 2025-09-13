@@ -3,7 +3,6 @@ import time
 import json
 from zillow_session import ZillowSession 
 
-
 class ZillowExtract:
     def __init__(self, url: str, headers: dict[str,str], MAX_PAGES: int, MIN_SLEEP: float, MAX_SLEEP: int):
         self.url = url 

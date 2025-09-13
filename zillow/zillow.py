@@ -28,26 +28,6 @@ def zillow_pipeline(
 
     return load_data, load_analytics
 
-# async def zillow_async_pipeline():
-#     data = await asyncio.gather(
-#         zillow_pipeline(
-#             zillow_url, zillow_headers, MAX_PAGES, MIN_SLEEP, MAX_SLEEP,
-#             gr_bounds['west_bound'], gr_bounds['east_bound'], gr_bounds['south_bound'],
-#             gr_bounds['north_bound'], gr_bounds['search_term'], gr_bounds['region_id']
-#         ),
-#         zillow_pipeline(
-#             zillow_url, zillow_headers, MAX_PAGES, MIN_SLEEP, MAX_SLEEP,
-#             boise_bounds['west_bound'], boise_bounds['east_bound'], boise_bounds['south_bound'],
-#             boise_bounds['north_bound'], boise_bounds['search_term'], boise_bounds['region_id']
-#         ),
-#         zillow_pipeline(
-#             zillow_url, zillow_headers, MAX_PAGES, MIN_SLEEP, MAX_SLEEP,
-#             harrisburg_bounds['west_bound'], harrisburg_bounds['east_bound'], harrisburg_bounds['south_bound'],
-#             harrisburg_bounds['north_bound'], harrisburg_bounds['search_term'], harrisburg_bounds['region_id']
-#         ),
-#     )
-#     return data
-
 if __name__ == '__main__': 
     grand_rapids_pipeline = zillow_pipeline(
         zillow_url, zillow_headers, MAX_PAGES, MIN_SLEEP, MAX_SLEEP,
