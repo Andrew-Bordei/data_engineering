@@ -1,9 +1,9 @@
 import random
 import time 
 import json
-from zillow_session import ZillowSession 
+from session import Session 
 
-class ZillowExtract:
+class Extract:
     def __init__(self, url: str, headers: dict[str,str], MAX_PAGES: int, MIN_SLEEP: float, MAX_SLEEP: int):
         self.url = url 
         self.headers = headers
@@ -18,14 +18,14 @@ class ZillowExtract:
         """Iterates through all the pages and gets all data listed on each page"""
 
         all_data = []
-        sess = ZillowSession(headers=self.headers)
+        sess = Session(headers=self.headers)
 
         for page in range(1, self.max_pages):
             time.sleep(random.uniform(self.min_sleep, self.max_sleep))
             print(f"Getting the housing data on page: {page}")
 
             payload = sess.set_payload(page,west_bound,east_bound,south_bound,north_bound,search_term,region_id)
-            data = sess.zillow_get_page(url=self.url, headers=self.headers, payload=payload)
+            data = sess.get_page(url=self.url, headers=self.headers, payload=payload)
             all_data.append(data)
         return all_data   
     
@@ -68,6 +68,8 @@ class ZillowExtract:
             marketing_status = self.safely_traverse_dict(base_path[house], 'marketingStatusSimplifiedCd')
             broker = self.safely_traverse_dict(base_path[house], 'brokerName')
             country_currency = self.safely_traverse_dict(base_path[house], 'countryCurrency')
+            lat = self.safely_traverse_dict(base_path[house], 'latLong', 'latitude')
+            long = self.safely_traverse_dict(base_path[house], 'latLong', 'longitude')
 
             house_data = {
                 "house_id": house_id, 
@@ -91,7 +93,9 @@ class ZillowExtract:
                 "premier_builder": premier_builder, 
                 "marketing_status": marketing_status, 
                 "broker": broker, 
-                "country_currency": country_currency
+                "country_currency": country_currency,
+                'latitude': lat,
+                'longitude': long,
             }
             all_houses_data.append(house_data)
         return all_houses_data

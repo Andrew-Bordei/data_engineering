@@ -23,7 +23,8 @@ async def zip_pipeline(url: str, city: str, table_name: str):
     return load_data, load_analytics
     
 async def zip_async_pipeline():
-    """Run all of the functions async to speed up performance"""
+    """Run all of the functions async for better performance"""
+
     data = await asyncio.gather(
         zip_pipeline(boise_zip_url, 'boise', 'zip_salaries'),
         zip_pipeline(gr_zip_url, 'grand rapids', 'zip_salaries'),

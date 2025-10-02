@@ -2,14 +2,15 @@ import mysql.connector
 import pandas as pd 
 import json 
 from datetime import datetime
+from config import CONFIG
 
 class ZipLoad:
     def __init__(self):
         self.database = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="!?65DataToTradr&/93",
-            database="economy"
+            host=CONFIG["host"],
+            user=CONFIG["user"],
+            password=CONFIG["password"],
+            database=CONFIG['database']
         )
 
     def load_json(self, data: dict[str, any], city: str):

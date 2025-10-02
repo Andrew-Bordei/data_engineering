@@ -24,3 +24,15 @@ dashboard/test.ipynb
 /redfin/__pycache__
 redfin/test.ipynb
 redfin/redfin_data_2025-09-13.csv
+/realtor/__pycache__
+realtor/RDC_Inventory_Core_Metrics_County_History.csv
+realtor/test.ipynb
+realtor_2025-09-14
+realtor/test.ipynb
+*.ipynb
+realtor/test.ipynb
+realtor/test.ipynb
+zillow/RDC_Inventory_Core_Metrics_County_History.csv
+zip/config.py
+zillow/config.py
+realtor/test.ipynb
