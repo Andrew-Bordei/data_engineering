@@ -4,7 +4,7 @@ import json
 from datetime import datetime
 from config import CONFIG
 
-class ZipLoad:
+class Load:
     def __init__(self):
         self.database = mysql.connector.connect(
             host=CONFIG["host"],

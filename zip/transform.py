@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from datetime import datetime
 
-class ZipTransform:
+class Transform:
     def __init__(self) -> None:
         self.date = datetime.today().strftime('%Y-%m-%d') 
     
@@ -26,4 +26,10 @@ class ZipTransform:
         data.append(city)
         data.append(self.date)
         return data
+        
+    def data_quality(self, df: pd.DataFrame):
+        # Null checks (data completeness) 
+        df_nulls = df.isna().sum()
+        
+        return df_nulls
     
