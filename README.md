@@ -30,9 +30,9 @@ Python: ETL pipeline, data quality checks, Pandas, NumPy, Requests, software des
 Power BI: Data visualization, calculated columns, geospatial data.
 
 ### Homebuyer Recommendations 
-Homebuyers should inform themselves on the historical and latest trends of their future real estate market before making a buying decision. Viewing the dashboard KPIs a homebuyer will see that 46%(compared to a 19% historical average) of houses across all three cities have reduced their prices, signaling the market is overvalued. House prices and their duration on the market were segmented into three categories to conform with the price and time range of a home buyer. Analyzing the data I recommend the following: 
+Homebuyers should inform themselves on the historical and latest trends of their future real estate market before making a decision. Viewing the dashboard KPIs a homebuyer will see that 46%(compared to a 19% historical average) of houses across all three cities have reduced their prices, signaling the market is overvalued. House prices and their duration on the market were segmented into three categories to conform with the price and time range of a homebuyer. Analyzing the data I recommend the following: 
 
-1. Purchase a home that has been on the market for 88 days to save $15,112 off the original price.
+1. Purchase a house that has been on the market for 88 days to save $15,112 off the original price.
 
 2. Identify your city and price range then pick the broker with the highest average price drop from the view below(average savings of $43,604). 
 
@@ -45,8 +45,10 @@ Homebuyers should inform themselves on the historical and latest trends of their
 
 Following the above recommendations will give a homebuyer the best chance of saving money on their new home. Even in a competitive market deals are available by waiting for a house to be on the market for 3 months and buying from specific brokers. 
 
-![City data](screenshots/city_data.png) 
-<p align="center">Figure 3. SQL view of segmented city data.</p>
+<figure align=center>
+    <img src ="screenshots/city_data.png"/>
+    <figcaption> Figure 3. SQL view of segmented city data.</figcaption>
+</figure>
 
 ### Future Development 
 1. Upgrade the ETL automation from Task Scheduler to Airflow. 

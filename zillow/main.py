@@ -32,7 +32,7 @@ def pipeline(
     data_quality_results = transform.data_quality(transformed_df)
 
     # Log data quality check
-    scraper_log.info(data_quality_results)
+    scraper_log.info(data_quality_results, logger_name)
 
     # Insert the data into db 
     load_data = load.load_data(transformed_df, 'zillow_data') 
