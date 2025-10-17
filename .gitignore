@@ -37,3 +37,4 @@ zip/config.py
 zillow/config.py
 realtor/test.ipynb
 realtor/config.py
+redfin/config.py
