@@ -12,7 +12,7 @@ def pipeline(
     ):
 
     # Instantiate the logger
-    scraper_log = ScraperLog(logger_name)
+    # scraper_log = ScraperLog(logger_name)
 
     # Instantiate the classes for the ETL pipeline 
     extract = Extract(url, headers, max_pages, min_sleep, max_sleep)
@@ -32,7 +32,7 @@ def pipeline(
     data_quality_results = transform.data_quality(transformed_df)
 
     # Log data quality check
-    scraper_log.info(data_quality_results, logger_name)
+    # scraper_log.info(data_quality_results, logger_name)
 
     # Insert the data into db 
     load_data = load.load_data(transformed_df, 'zillow_data') 
