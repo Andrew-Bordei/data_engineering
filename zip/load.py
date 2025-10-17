@@ -2,7 +2,7 @@ import mysql.connector
 import pandas as pd 
 import json 
 from datetime import datetime
-from config import CONFIG
+from config.config import CONFIG
 
 class Load:
     def __init__(self):

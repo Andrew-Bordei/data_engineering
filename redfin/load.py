@@ -1,7 +1,7 @@
 import mysql.connector
 import pandas as pd 
 from datetime import datetime
-from config import CONFIG
+from config.config import CONFIG
 
 class Load:
     def __init__(self):
