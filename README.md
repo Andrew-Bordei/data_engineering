@@ -9,11 +9,15 @@ In a real estate market of high interest rates and rising house prices homebuyer
 2. Save an average of $43,604 by purchasing from an identified broker. 
 
 
+![architecture diagram](screenshots/architecture_diagram.png)
+<p align="center">Figure 1. Project architecture.</p>
+
+
 ### Business Problem 
 Relocating to a new city can be overwhelming, especially if it's a high growth city where competition for homes is fierce. Almost half of homes(46%) in the top three cities have reduced their sale price from the original list price. How can we determine the best time for homebuyers to purchase a home to maximize savings? Which brokers have the highest average price drops? 
 
 ![power bi dashboard](screenshots/power_bi_dashboard.png)
-<p align="center">Figure 1. Power BI dashboard of real estate data.</p>
+<p align="center">Figure 2. Power BI dashboard of real estate data.</p>
 
 ### Methodology 
 1. Automated data pipeline in Python that extracts, cleans, and transforms the data from Zillow, ZipRecruiter, and Redfin then loads it into a MySQL database.
@@ -40,14 +44,14 @@ Homebuyers should inform themselves on the historical and latest trends of their
 
 
 ![Broker data](screenshots/top5_broker_view.png)
-<p align="center">Figure 2. SQL view of top 5 brokers.</p>
+<p align="center">Figure 3. SQL view of top 5 brokers.</p>
 
 
 Following the above recommendations will give a homebuyer the best chance of saving money on their new home. Even in a competitive market deals are available by waiting for a house to be on the market for 3 months and buying from specific brokers. 
 
 <figure align=center>
     <img src ="screenshots/city_data.png"/>
-    <figcaption> Figure 3. SQL view of segmented city data.</figcaption>
+    <figcaption> Figure 4. SQL view of segmented city data.</figcaption>
 </figure>
 
 ### Future Development 
